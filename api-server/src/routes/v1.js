@@ -2,6 +2,8 @@
 
 const express = require('express');
 const dataModules = require('../models');
+const bearerAuth = require('../auth/middleware/bearer.js');
+const acl = require('../auth/middleware/acl.js');
 
 const router = express.Router();
 
@@ -17,6 +19,8 @@ router.param('model', (req, res, next) => {
 
 router.get('/:model', handleGetAll);
 router.get('/:model/:id', handleGetOne);
+router.get('/secret', bearerAuth, acl('read'), handleGetSecret);
+router.get('/users', bearerAuth, acl('delete'), handleGetUsers);
 router.post('/:model', handleCreate);
 router.put('/:model/:id', handleUpdate);
 router.delete('/:model/:id', handleDelete);
@@ -51,5 +55,24 @@ async function handleDelete(req, res) {
   res.status(200).json(deletedRecord);
 }
 
+async function handleGetSecret(req, res, next) {
+  try {
+    res.status(200).send('Welcome to the secret area');
+  } catch (error) {
+    next(error);
+  }
+}
 
+async function handleGetUsers(req, res, next) {
+  try {
+    // Retrieve user records (assuming it's coming from the auth server models)
+    const userRecords = await users.findAll({});
+    // Extract usernames from user records
+    const usernames = userRecords.map(user => user.username);
+    // Send the list of usernames
+    res.status(200).json(usernames);
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = router;
