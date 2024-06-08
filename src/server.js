@@ -4,10 +4,10 @@ const express = require('express');
 
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
-const authRoutes = require('./auth/routes/routes.js');
+const authRoutes = require('./auth/routes.js');
 
-const v1Routes = require('./auth/routes/v1.js');
-const v2Routes = require('./auth/routes/v2.js');
+const v1Routes = require('./routes/v1.js');
+const v2Routes = require('./routes/v2.js');
 
 const app = express();
 
