@@ -7,7 +7,7 @@ const bearerAuth = require('../auth/middleware/bearer.js');
 const acl = require('../auth/middleware/acl.js');
 
 v2Router.get('/', bearerAuth, handleGetV2);
-v2Router.post('/', bearerAuth, acl('create'), handlePustV2);
+v2Router.post('/', bearerAuth, acl('create'), handlePostV2);
 v2Router.put('/:id', bearerAuth, acl('update'), handlePutV2);
 v2Router.delete(':id', bearerAuth, acl('delete'), handleDeleteV2);
 
