@@ -6,7 +6,7 @@ const app = require('./src/server.js');
 const PORT = process.env.PORT || 3001
 
 db.sync().then(() => {
-  app.listen(PORT, () => {
+  app.start(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
